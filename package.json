@@ -1,0 +1,14 @@
+{
+  "name": "TolgeeImportExportTool",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "TooPick",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "commander": "^9.0.0",
+    "extract-zip": "^2.0.1"
+  }
+}
