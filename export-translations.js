@@ -85,6 +85,7 @@ async function startExport() {
   console.info("Export successfully completed !");
 }
 
+// Find all translation files (en.json, fr.json, etc...) in a folder
 async function getTranslationFilesInFolder(apiKey, inputDir, folder = null) {
   var folderPath = inputDir;
   if (folder !== null) {
@@ -106,9 +107,12 @@ async function getTranslationFilesInFolder(apiKey, inputDir, folder = null) {
       for (const file of files) {
         var filePath = folderPath + path.sep + file;
         var fileStats = fs.statSync(filePath);
+
+        // Get only json files
         if (!fileStats.isDirectory() && path.extname(filePath) === ".json") {
           console.info(folderPrint(folder) + "File found : " + filePath);
           let rawData = fs.readFileSync(filePath);
+          // Add "flatten" json data with his lang code
           datas.push({
             lang: path.parse(filePath).name,
             data: Object.flatten(JSON.parse(rawData)),
@@ -116,6 +120,7 @@ async function getTranslationFilesInFolder(apiKey, inputDir, folder = null) {
         }
       }
 
+      // Merge all languages in one single json
       await mergeInTolgee(apiKey, mergeTranslationInOneJson(datas), folder);
     } else {
       console.error("Error : Api key not found for : " + folder);
